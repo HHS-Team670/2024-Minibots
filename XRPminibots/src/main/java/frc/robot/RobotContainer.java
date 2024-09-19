@@ -72,6 +72,11 @@ public class RobotContainer {
         .onTrue(new InstantCommand(() -> m_arm.setAngle(90.0), m_arm))
         .onFalse(new InstantCommand(() -> m_arm.setAngle(0.0), m_arm));
 
+    JoystickButton joyStickXButton = new JoystickButton(m_controller, 4);
+    joyStickXButton
+        .onTrue(new PrintCommand("Distance: " + m_drivetrain.getAverageDistanceInch()));
+        // .onTrue(new InstantCommand(() -> System.out.println("Distance: " + m_drivetrain.getAverageDistanceInch())));
+
     // Setup SmartDashboard options
     m_chooser.setDefaultOption("Auto Routine Distance", new AutonomousDistance(m_drivetrain));
     m_chooser.addOption("Auto Routine Time", new AutonomousTime(m_drivetrain));
@@ -93,7 +98,11 @@ public class RobotContainer {
    * @return the command to run in teleop
    */
   public Command getArcadeDriveCommand() {
+    //This code is the one that controls the joysticks
+    new PrintCommand("Distance: " + m_drivetrain.getAverageDistanceInch());
     return new ArcadeDrive(
-        m_drivetrain, () -> -m_controller.getRawAxis(1), () -> -m_controller.getRawAxis(2));
+      m_drivetrain, () -> -m_controller.getRawAxis(1), () -> -m_controller.getRawAxis(0));
+        // m_drivetrain, () -> -m_controller.getRawAxis(3), () -> -m_controller.getRawAxis(0));
+        // m_drivetrain, new JoystickButton(m_controller, 3).onTrue(() -> 1), () -> -m_controller.getRawAxis(0));
   }
 }
