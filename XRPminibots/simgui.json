@@ -1,5 +1,10 @@
 {
   "HALProvider": {
+    "Analog Inputs": {
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "BuiltInAccel": {
         "header": {
@@ -58,10 +63,9 @@
       "open": true
     },
     "Server": {
-      "Publishers": {
+      "Subscribers": {
         "open": true
-      },
-      "open": true
+      }
     },
     "visible": true
   }
