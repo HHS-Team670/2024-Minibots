@@ -1,0 +1,183 @@
+This is What i have learned all in one place use at your own risk
+
+
+
+1. Controller Input Managment
+
+all input from the Xbox Controller is handled in the RobotContainer
+
+To do something once a button is clicked on the controler you would use a JoystickButton ex.
+
+
+private final Joystick m_controller = new Joystick(0); //this var is allready diffined in the container and was added for refrance
+
+JoystickButton nameOfVar = new JoystickButton(m_controller, 1); //This defines the joystick in the code 
+//the second param is the number of the button (1 is for button A, 2 is for button B) if you are not sure what number the button is
+//run the project then there will be yellow boxes in the GUI press the wanted button adn the box will light up that box's number
+//is the number that should be used
+
+
+
+//The JoystickButton class has a method called .onTrue and .onFalse (both self explanatory) the both take a param of a Command class
+//(Command class explenation bellow on line 43)
+//once the refranced button is pressed the command passed will be run
+//once the button is no longer pressed down the onFalse Command will be run
+
+nameOfVar
+    .onTrue(new InstantCommand(() -> m_arm.setAngle(45.0), m_arm))
+    .onFalse(new InstantCommand(() -> m_arm.setAngle(0.0), m_arm));
+
+
+If you want to use the Trigger buttons or the joysticks(on the Xbox Controller)
+
+you would use an axis ex.
+
+m_controller.getRawAxis(1)
+
+// this will return the value of the axis between 1 and -1
+// the number that is passed as a param is the axis number
+// the main joystick is generaly axis 1 and the side joystick is generaly axis 4
+// if that is not the case for your controller above the yellow boxes in the GUI there will be you controller settings
+// which will show you the value of each axis you can press triggers and move joysticks to see what changes and get the axis number
+
+
+2. Command class explanation
+
+Command class has 2 variations that are used in our current code
+
+A regular Command and a SequentialCommandGroup
+
+    2a. SequentialCommandGroup
+        a SequentialCommandGroup will have a constructor which will take in any params that you might want to use for the command
+        in a SequentialCommandGroup You can add commands to the group which will run in the order given one after the other
+        ex.
+        public class MyExample extends SequentialCommandGroup {
+
+            MyExample(Drivetrain drivetrain) {
+
+            addCommands(
+                new DriveDistance(39, 2, drivetrain),
+                new TurnDegrees(-2, 90, drivetrain) );
+            }
+        }
+
+        when the SequentialCommandGroup is called it will schedual all command added to it and will run one after another
+
+    2b. Command
+        a normal Command will have a constructor which will take in params you might want to use and will store them localy
+        if you are taking a subsytem as a param you will need to add it as a requirment so that there are not multiple instances
+        of the subsytem
+        there is also an overide method called initalize this method is called once when the command starts to run
+        then there is the overide method called execute this method will be run untill the command tells it to stop
+        then there is the overide method called end this method will be called once after the command has finished executing or 
+        when the command is interupted(forcfully stopped)
+        then there is the overide method called isFinished this method is run every time right after the execute command
+        and if it returns a value of true then the execute function will end and the end method is called otherwise the command
+        will coninue as normal
+        ex.
+
+        public class MyExample extends Command{
+
+            private Subsytem m_sub;
+            private OtherParams m_params;
+
+            MyExample(Subsytem sub, OtherParams params){
+                m_sub = sub;
+                m_params = params
+            }
+
+
+            @Override
+            public void initialize() {
+                m_sub.reset()
+            }
+
+            @Override
+            public void execute(){
+                m_sub.doSomething(params)
+            }
+
+            @Override
+            public void end(boolean interrupted) {
+                m_sub.reset()    
+            }
+
+            @Override
+            public boolean isFinished() {
+                return m_sub.taskCompleted
+            }
+
+        }
+
+
+3. Autonomous
+
+When Autonomous is started the command that is run by default is the AutonomousDistance.java which is just a SequentialCommandGroup
+you can add whatever commands you want to run(including other SequentialCommandGroups) to its list of commands and it will be run 
+during Autonomous
+
+public class AutonomousDistance extends SequentialCommandGroup {
+
+  public AutonomousDistance(Drivetrain drivetrain) {
+    
+    addCommands(
+         );
+  }
+}
+
+4. Periodic methods
+
+There are a few Periodic methods that are run on a loop when the robot is running
+the can be found the the Robot.java class
+
+the main one can be found on line 41 this one is run no mater what mode the robot is in
+
+
+@Override
+public void robotPeriodic() {
+// Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
+// commands, running already-scheduled commands, removing finished or interrupted commands,
+// and running subsystem periodic() methods.  This must be called from the robot's periodic
+// block in order for anything in the Command-based framework to work.
+CommandScheduler.getInstance().run();
+}
+
+
+the disabled preodic can be found on line 54 it is run while the robot is in disabled mode
+
+  @Override
+  public void disabledPeriodic() {}
+
+the Autonomous preodic can be found on line 69 (hehe) and it is run while the robot is in Autonomous mode
+
+  @Override
+  public void autonomousPeriodic() {}
+
+
+the teleop preodic can be found on line 84 and it is run while the robot is in teleoperated mode
+
+  @Override
+  public void teleopPeriodic() {
+    m_robotContainer.m_arm.moveArm();
+    
+
+  }
+
+the test preodic can be found on line 84 and it is run while the robot is in test mode
+
+
+  @Override
+  public void testPeriodic() {}
+
+the simulation preodic can be found on line 84 and it is run while the robot is in simulation mode
+
+  @Override
+  public void simulationPeriodic() {}
+
+
+5. Mode Instialization methods 
+
+just like the periodic methods they can be found in the robot.java class these are run only one time when the robot is put into
+its respective mode
+
+all of them can be found right above their corresponding preodic method(refer to #4 in the docs for line numbers)
