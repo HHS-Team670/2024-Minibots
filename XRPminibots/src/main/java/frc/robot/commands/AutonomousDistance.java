@@ -15,10 +15,22 @@ public class AutonomousDistance extends SequentialCommandGroup {
    * @param drivetrain The drivetrain subsystem on which this command will run
    */
   public AutonomousDistance(Drivetrain drivetrain) {
+    for (int i = 0; i <= 33; i++){
+      addCommands(
+          new DriveDistance(0.75, 1, drivetrain), 
+          new TurnDegrees(-2,drivetrain.m_gyro.getAngleZ(),drivetrain));
+      System.out.println(drivetrain.m_gyro.getAngleZ());
+    }
     addCommands(
-        new DriveDistance(-0.5, 10, drivetrain),
-        new TurnDegrees(-0.5, 180, drivetrain),
-        new DriveDistance(-0.5, 10, drivetrain),
-        new TurnDegrees(0.5, 180, drivetrain));
+        new TurnDegrees(-0.6, 45, drivetrain));
+    for (int i = 0; i <= 27; i++){
+      addCommands(
+          new DriveDistance(0.75, 1, drivetrain), 
+          new TurnDegrees(-2,drivetrain.m_gyro.getAngleZ(),drivetrain));
+      System.out.println(drivetrain.m_gyro.getAngleZ());
+    }
+    addCommands(
+      new TurnDegrees(0.6, 45, drivetrain));
+
   }
 }

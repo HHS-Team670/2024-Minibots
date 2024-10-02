@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.xrp.XRPGyro;
 import edu.wpi.first.wpilibj.xrp.XRPMotor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.ArcadeDrive;
+import java.util.function.Supplier;
 
 public class Drivetrain extends SubsystemBase {
   private static final double kGearRatio =
@@ -34,7 +37,7 @@ public class Drivetrain extends SubsystemBase {
       new DifferentialDrive(m_leftMotor::set, m_rightMotor::set);
 
   // Set up the XRPGyro
-  private final XRPGyro m_gyro = new XRPGyro();
+  public final XRPGyro m_gyro = new XRPGyro();
 
   // Set up the BuiltInAccelerometer
   private final BuiltInAccelerometer m_accelerometer = new BuiltInAccelerometer();
@@ -57,6 +60,10 @@ public class Drivetrain extends SubsystemBase {
 
   public void arcadeDrive(double xaxisSpeed, double zaxisRotate) {
     m_diffDrive.arcadeDrive(xaxisSpeed, zaxisRotate);
+  }
+
+  public Command drive(Supplier<Double> xaxisSpeed, Supplier<Double> zaxisRotate){
+    return new ArcadeDrive(this,  xaxisSpeed, zaxisRotate);
   }
 
   public void resetEncoders() {

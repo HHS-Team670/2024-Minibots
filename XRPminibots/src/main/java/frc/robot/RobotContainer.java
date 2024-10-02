@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.DriveDistance;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -71,6 +73,15 @@ public class RobotContainer {
     joystickBButton
         .onTrue(new InstantCommand(() -> m_arm.setAngle(90.0), m_arm))
         .onFalse(new InstantCommand(() -> m_arm.setAngle(0.0), m_arm));
+
+    JoystickButton joystickXButton = new JoystickButton(m_controller, 4);
+    joystickXButton
+        .onTrue(new InstantCommand(() -> m_arm.setAngle(30.0), m_arm))
+        .onFalse(new InstantCommand(() -> m_arm.setAngle(0.0), m_arm));
+
+    JoystickButton joystickYButton = new JoystickButton(m_controller, 5);
+    joystickYButton
+        .onTrue(new InstantCommand(() -> new DriveDistance(2, 30, m_drivetrain)));
 
     // Setup SmartDashboard options
     m_chooser.setDefaultOption("Auto Routine Distance", new AutonomousDistance(m_drivetrain));
