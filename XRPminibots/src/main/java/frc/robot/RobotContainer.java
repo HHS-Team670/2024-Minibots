@@ -12,6 +12,8 @@ import frc.robot.commands.AutonomousDistance;
 import frc.robot.commands.AutonomousTime;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.RangeFinder;
+import frc.robot.subsystems.ReflectiveSensor;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.xrp.XRPOnBoardIO;
@@ -21,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveDistance;
+
 
 
 /**
@@ -33,7 +36,9 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain m_drivetrain = new Drivetrain();
   private final XRPOnBoardIO m_onboardIO = new XRPOnBoardIO();
-  private final Arm m_arm = new Arm();
+  private final RangeFinder m_RangeFinder = new RangeFinder();
+  private final ReflectiveSensor m_ReflectiveSensor = new ReflectiveSensor();
+  public final Arm m_arm = new Arm();
 
   // Assumes a gamepad plugged into channel 0
   private final Joystick m_controller = new Joystick(0);
@@ -73,15 +78,17 @@ public class RobotContainer {
     joystickBButton
         .onTrue(new InstantCommand(() -> m_arm.setAngle(90.0), m_arm))
         .onFalse(new InstantCommand(() -> m_arm.setAngle(0.0), m_arm));
-
     JoystickButton joystickXButton = new JoystickButton(m_controller, 4);
     joystickXButton
-        .onTrue(new InstantCommand(() -> m_arm.setAngle(30.0), m_arm))
-        .onFalse(new InstantCommand(() -> m_arm.setAngle(0.0), m_arm));
-
-    JoystickButton joystickYButton = new JoystickButton(m_controller, 5);
+        .onTrue(new InstantCommand(() -> m_arm.startUp(0.75, true), m_arm))
+        .onFalse(new InstantCommand(() -> m_arm.startUp(0, false), m_arm));    
+    JoystickButton joystickYButton = new JoystickButton(m_controller, 3);
     joystickYButton
-        .onTrue(new InstantCommand(() -> new DriveDistance(2, 30, m_drivetrain)));
+        .onTrue(new InstantCommand(() -> m_arm.startDown(-0.75, true), m_arm))
+        .onFalse(new InstantCommand(() -> m_arm.startDown(0, false), m_arm));
+
+    JoystickButton joystickLButton = new JoystickButton(m_controller, 5);
+    joystickLButton.onTrue(new PrintCommand(String.valueOf(m_RangeFinder.rangeInInches())));
 
     // Setup SmartDashboard options
     m_chooser.setDefaultOption("Auto Routine Distance", new AutonomousDistance(m_drivetrain));
@@ -104,7 +111,13 @@ public class RobotContainer {
    * @return the command to run in teleop
    */
   public Command getArcadeDriveCommand() {
-    return new ArcadeDrive(
-        m_drivetrain, () -> -m_controller.getRawAxis(1), () -> -m_controller.getRawAxis(2));
+    boolean bool = m_RangeFinder.checkInRangeInches(5);
+    if (bool){
+      return new ArcadeDrive(
+        m_drivetrain, () -> -m_controller.getRawAxis(1), () -> -m_controller.getRawAxis(4));
+    } else {
+      return new ArcadeDrive(
+        m_drivetrain, () -> -m_controller.getRawAxis(2), () -> -m_controller.getRawAxis(3));
+    }
   }
 }
