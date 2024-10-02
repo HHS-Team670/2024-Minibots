@@ -36,6 +36,9 @@ public class Drivetrain extends SubsystemBase {
   // Set up the XRPGyro
   private final XRPGyro m_gyro = new XRPGyro();
 
+  //Set up Reflectance Sensor
+  private final ReflectanceSensor m_reflectanceSensor = new ReflectanceSensor();
+
   // Set up the BuiltInAccelerometer
   private final BuiltInAccelerometer m_accelerometer = new BuiltInAccelerometer();
 
@@ -55,8 +58,16 @@ public class Drivetrain extends SubsystemBase {
     resetEncoders();
   }
 
+  public ReflectanceSensor getReflectanceSensor(){
+    return m_reflectanceSensor;
+  }
+
   public void arcadeDrive(double xaxisSpeed, double zaxisRotate) {
     m_diffDrive.arcadeDrive(xaxisSpeed, zaxisRotate);
+  }
+
+  public void tankDrive(double xaxisSpeed){
+    m_diffDrive.tankDrive(xaxisSpeed, 0.3*xaxisSpeed);
   }
 
   public void resetEncoders() {

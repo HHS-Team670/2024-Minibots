@@ -37,7 +37,8 @@ public class DriveDistance extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.arcadeDrive(m_speed, 0);
+    // m_drive.arcadeDrive(m_speed, 0);
+    m_drive.tankDrive(m_speed);
   }
 
   // Called once the command ends or is interrupted.

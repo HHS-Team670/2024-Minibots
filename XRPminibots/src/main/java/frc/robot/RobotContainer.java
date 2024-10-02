@@ -99,7 +99,10 @@ public class RobotContainer {
    */
   public Command getArcadeDriveCommand() {
     //This code is the one that controls the joysticks
-    new PrintCommand("Distance: " + m_drivetrain.getAverageDistanceInch());
+    // new PrintCommand("Distance: " + m_drivetrain.getAverageDistanceInch());
+    new PrintCommand("Test");
+    new PrintCommand("Left: " + m_drivetrain.getReflectanceSensor().getLeft());
+    new PrintCommand("Right: " + m_drivetrain.getReflectanceSensor().getRight());
     return new ArcadeDrive(
       m_drivetrain, () -> -m_controller.getRawAxis(1), () -> -m_controller.getRawAxis(0));
         // m_drivetrain, () -> -m_controller.getRawAxis(3), () -> -m_controller.getRawAxis(0));
