@@ -56,4 +56,6 @@ public class DriveAutoAlign extends Command {
     public boolean isFinished() {
         return Math.abs(m_drivetrain.getAverageDistanceInch()) >= m_distance;
     }
+
+    
 }

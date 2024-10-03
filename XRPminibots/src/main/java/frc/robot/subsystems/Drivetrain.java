@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.xrp.XRPGyro;
 import edu.wpi.first.wpilibj.xrp.XRPMotor;
+import edu.wpi.first.wpilibj.xrp.XRPReflectanceSensor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
@@ -38,6 +39,9 @@ public class Drivetrain extends SubsystemBase {
 
   // Set up the BuiltInAccelerometer
   private final BuiltInAccelerometer m_accelerometer = new BuiltInAccelerometer();
+
+  // Set up the Reflectance Sensor
+  private final XRPReflectanceSensor m_reflectanceSensor = new XRPReflectanceSensor();
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
@@ -141,6 +145,17 @@ public class Drivetrain extends SubsystemBase {
   /** Reset the gyro. */
   public void resetGyro() {
     m_gyro.reset();
+  }
+
+  /**
+   * 
+   */
+  public double getLeftReflectanceValue(){
+    return m_reflectanceSensor.getLeftReflectanceValue() * 5.0;
+  }
+
+  public double getRightReflectanceValue(){
+    return m_reflectanceSensor.getRightReflectanceValue() * 5.0;
   }
 
   @Override

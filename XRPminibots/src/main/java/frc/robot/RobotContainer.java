@@ -13,7 +13,6 @@ import frc.robot.commands.AutonomousTime;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.RangeFinder;
-import frc.robot.subsystems.ReflectiveSensor;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.xrp.XRPOnBoardIO;
@@ -35,7 +34,6 @@ public class RobotContainer {
   private final Drivetrain m_drivetrain = new Drivetrain();
   private final XRPOnBoardIO m_onboardIO = new XRPOnBoardIO();
   private final RangeFinder m_RangeFinder = new RangeFinder();
-  private final ReflectiveSensor m_ReflectiveSensor = new ReflectiveSensor();
   public final Arm m_arm = new Arm();
 
   // Assumes a gamepad plugged into channel 0

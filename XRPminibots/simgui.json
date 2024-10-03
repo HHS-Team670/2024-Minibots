@@ -5,6 +5,21 @@
         "visible": true
       }
     },
+    "Encoders": {
+      "0": {
+        "header": {
+          "open": true
+        }
+      },
+      "1": {
+        "header": {
+          "open": true
+        }
+      },
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "BuiltInAccel": {
         "header": {
