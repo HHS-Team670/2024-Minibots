@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.xrp.XRPGyro;
 import edu.wpi.first.wpilibj.xrp.XRPMotor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.xrp.XRPReflectanceSensor;
+
 
 public class Drivetrain extends SubsystemBase {
   private static final double kGearRatio =
