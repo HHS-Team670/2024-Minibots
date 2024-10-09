@@ -5,6 +5,8 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.ReflectiveSensor;
+import edu.wpi.first.wpilibj.xrp.XRPReflectanceSensor;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class AutonomousDistance extends SequentialCommandGroup {
@@ -14,13 +16,14 @@ public class AutonomousDistance extends SequentialCommandGroup {
    *
    * @param drivetrain The drivetrain subsystem on which this command will run
    */
-  public AutonomousDistance(Drivetrain drivetrain) {
+  public AutonomousDistance(Drivetrain drivetrain, ReflectiveSensor reflectanceSensor) {
     addCommands(
-        new DriveDistance(-2, 20, drivetrain),
-        new TurnDegrees(-1, 90, drivetrain),
-        new DriveDistance(2, 15, drivetrain),
-        new TurnDegrees(5, 45, drivetrain),
-        new DriveDistance(1, 10, drivetrain)
+      new BalanceDrive(1, 20, drivetrain, reflectanceSensor)
+        // new DriveDistance(-2, 20, drivetrain),
+        // new TurnDegrees(-1, 90, drivetrain),
+        // new DriveDistance(2, 15, drivetrain),
+        // new TurnDegrees(5, 45, drivetrain),
+        // new DriveDistance(1, 10, drivetrain)
     );
         
   }
