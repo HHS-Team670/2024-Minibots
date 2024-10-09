@@ -8,6 +8,7 @@ import frc.robot.subsystems.ReflectiveSensor;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class AutonomousDistance extends SequentialCommandGroup {
+  private double colorValue = 0.83;
   /**
    * Creates a new Autonomous Drive based on distance. This will drive out for a specified distance,
    * turn around and drive back.
@@ -16,7 +17,13 @@ public class AutonomousDistance extends SequentialCommandGroup {
    */
   public AutonomousDistance(Drivetrain drivetrain, ReflectiveSensor sensor) {
     addCommands(
-      new ForwardOnBlueTape(drivetrain, sensor, 0.6)
+      new ForwardOnBlueTape(drivetrain, sensor, 0.65, colorValue),
+      new TurnRightUntilBlueTape(drivetrain, sensor, 0.65, colorValue),
+      new ForwardOnBlueTape(drivetrain, sensor, 0.65, colorValue),
+      new TurnRightUntilBlueTape(drivetrain, sensor, 0.65, colorValue),
+      new ForwardOnBlueTape(drivetrain, sensor, 0.65, colorValue),
+      new TurnLeftUntilBlueTape(drivetrain, sensor, 0.65, colorValue),
+      new ForwardOnBlueTape(drivetrain, sensor, 0.65, colorValue)
     );
   }
 }

@@ -43,9 +43,6 @@
     "Persistent Values": {
       "open": false
     },
-    "Retained Values": {
-      "open": false
-    },
     "transitory": {
       "SmartDashboard": {
         "SendableChooser[0]": {

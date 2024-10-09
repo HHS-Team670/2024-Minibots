@@ -8,11 +8,13 @@ public class ForwardOnBlueTape extends Command {
   private Drivetrain m_drive;
   private ReflectiveSensor m_sensor;
   private double m_speed;
+  private double colorValue;
 
-  public ForwardOnBlueTape(Drivetrain drivetrain, ReflectiveSensor sensor, double speed) {
+  public ForwardOnBlueTape(Drivetrain drivetrain, ReflectiveSensor sensor, double speed, double color) {
     m_drive = drivetrain;
     m_sensor = sensor;
     m_speed = speed;
+    colorValue = color;
     addRequirements(drivetrain);
   }
 
@@ -25,34 +27,22 @@ public class ForwardOnBlueTape extends Command {
   @Override
   public void execute(){
     //move forward
-    if (m_sensor.leftValue() < 0.8 && m_sensor.rightValue() < 0.8){
+    if (m_sensor.leftValue() < colorValue && m_sensor.rightValue() < colorValue){
       m_drive.arcadeDrive(m_speed,0);
-    //if swerved too much to the right
-    } else if (m_sensor.leftValue() < 0.8 && m_sensor.rightValue() >= 0.8){
-        m_drive.arcadeDrive(1,0.3);
+    // if swerved too much to the right
+    } else if (m_sensor.leftValue() < colorValue && m_sensor.rightValue() >= colorValue){
+      m_drive.arcadeDrive(0,0.65);
     //if swerved too much to the left
-    } else if (m_sensor.leftValue() >= 0.8 && m_sensor.rightValue() < 0.8){
-        m_drive.arcadeDrive(1,-0.3);
+    } else if (m_sensor.leftValue() >= colorValue && m_sensor.rightValue() < colorValue){
+      m_drive.arcadeDrive(0,-0.65);
     }
-    System.out.println(m_sensor.leftValue() + " " + m_sensor.rightValue());
+    // } else if (m_sensor.leftValue() < colorValue && m_sensor.rightValue() >= colorValue){
+    //   m_drive.arcadeDrive(1,0.7);
+    // //if swerved too much to the left
+    // } else if (m_sensor.leftValue() >= colorValue && m_sensor.rightValue() < colorValue){
+    //   m_drive.arcadeDrive(1,-0.7);
+    // }
   }
-
-  // @Override
-  // public void execute(){
-  //   //move forward
-  //   m_drive.arcadeDrive(m_speed,0);
-  //   //if swerved too much to the right
-  //   if (m_sensor.leftValue() < 0.8 && m_sensor.rightValue() >= 0.8){
-  //     while (m_sensor.rightValue() >= 0.8){
-  //       m_drive.arcadeDrive(0,-1 * m_speed);
-  //     }
-  //   //if swerved too much to the left
-  //   } else if (m_sensor.leftValue() >= 0.8 && m_sensor.rightValue() < 0.8){
-  //     while (m_sensor.leftValue() >= 0.8){
-  //       m_drive.arcadeDrive(0,m_speed);
-  //     }
-  //   }
-  // }
 
   @Override
   public void end(boolean interrupted) {
@@ -61,7 +51,9 @@ public class ForwardOnBlueTape extends Command {
 
   @Override
   public boolean isFinished() {
-    return (m_sensor.leftValue() >= 0.8 && m_sensor.rightValue() >= 0.8);
+    System.out.println(m_sensor.leftValue());
+    System.out.println(m_sensor.rightValue());
+    return (m_sensor.leftValue() >= colorValue && m_sensor.rightValue() >= colorValue);
   }
 
 }
