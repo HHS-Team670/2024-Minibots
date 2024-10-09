@@ -11,13 +11,15 @@ public class ProtectedDrive extends Command {
     private double m_distance;
     private double m_speed;
     private boolean m_done = false;
+    private int m_type;
+    int counter = 0;
     
     
-    public ProtectedDrive(Drivetrain drivetrain, ReflectiveSensor sensor, double speed ){
+    public ProtectedDrive(Drivetrain drivetrain, ReflectiveSensor sensor){
         m_sensor = sensor;
         m_drivetrain = drivetrain;
         // m_distance = distance;
-        m_speed = speed;
+        // m_speed = speed;
 
         addRequirements(drivetrain);
     }
@@ -29,16 +31,41 @@ public class ProtectedDrive extends Command {
     }
 
     @Override
-    public void execute(){
-        if(m_sensor.leftValue() < 0.8 && m_sensor.rightValue() < 0.8) {
-            m_drivetrain.arcadeDrive(m_speed, 0);
+    public void execute() {
+
+        // if(!leftSensorGrey && !rightSensorGrey) {
+        //     m_drivetrain.arcadeDrive(m_speed, 0);
+        // }
+
+       
+        
+        if (m_sensor.leftValue() < 0.81 && m_sensor.rightValue() < 0.81) {
+            m_drivetrain.arcadeDrive(0.65, 0);
+            m_type = 1;
         }
-        if(m_sensor.leftValue() > 0.8) {
-            while(m_sensor.leftValue() > 0.8){
-                m_drivetrain.arcadeDrive(0, m_speed);
+        else if (m_sensor.leftValue() > 0.81 && m_sensor.rightValue() > 0.81) { // change this one
+            double value;
+            if (m_type != 2){
+                counter++;
+                System.out.println(counter);
             }
+            m_type =2;
+            value = -0.65;
+            if (counter % 4 == 2){
+                value = 0.65;
+            }
+            m_drivetrain.arcadeDrive(0, value);
+            
         }
-    
+        else if (m_sensor.leftValue() > 0.81) {
+            m_drivetrain.arcadeDrive(0, -0.65); 
+            m_type = 3;
+        }
+        else if (m_sensor.rightValue() > 0.81) {
+            m_drivetrain.arcadeDrive(0, 0.65);
+            m_type = 4;
+        }
+
     }
 
     @Override
