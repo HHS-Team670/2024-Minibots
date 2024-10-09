@@ -29,19 +29,12 @@ public class ForwardOnBlueTape extends Command {
     //move forward
     if (m_sensor.leftValue() < colorValue && m_sensor.rightValue() < colorValue){
       m_drive.arcadeDrive(m_speed,0);
-    // if swerved too much to the right
     } else if (m_sensor.leftValue() < colorValue && m_sensor.rightValue() >= colorValue){
-      m_drive.arcadeDrive(0,0.65);
+      m_drive.arcadeDrive(0.8,0.6);
     //if swerved too much to the left
     } else if (m_sensor.leftValue() >= colorValue && m_sensor.rightValue() < colorValue){
-      m_drive.arcadeDrive(0,-0.65);
+      m_drive.arcadeDrive(0.8,-0.6);
     }
-    // } else if (m_sensor.leftValue() < colorValue && m_sensor.rightValue() >= colorValue){
-    //   m_drive.arcadeDrive(1,0.7);
-    // //if swerved too much to the left
-    // } else if (m_sensor.leftValue() >= colorValue && m_sensor.rightValue() < colorValue){
-    //   m_drive.arcadeDrive(1,-0.7);
-    // }
   }
 
   @Override
