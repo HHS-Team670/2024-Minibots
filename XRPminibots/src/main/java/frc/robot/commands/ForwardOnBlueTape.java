@@ -44,8 +44,6 @@ public class ForwardOnBlueTape extends Command {
 
   @Override
   public boolean isFinished() {
-    System.out.println(m_sensor.leftValue());
-    System.out.println(m_sensor.rightValue());
     return (m_sensor.leftValue() >= colorValue && m_sensor.rightValue() >= colorValue);
   }
 
