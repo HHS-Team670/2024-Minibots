@@ -2,18 +2,20 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.ReflectiveSensor;
 
 public class DriveAutoAlign extends Command {
     private double m_distance;
     private double m_speed;
     private Drivetrain m_drivetrain;
     private double m_alignAngle;
-    public DriveAutoAlign(double distance, double speed, double alignAngle , Drivetrain drivetrain){
+    private ReflectiveSensor m_reflectiveSensor;
+    public DriveAutoAlign(double distance, double speed, Drivetrain drivetrain, ReflectiveSensor reflectiveSensor){
         addRequirements(drivetrain);
         m_drivetrain = drivetrain;
-        m_distance = distance;
         m_speed = speed;
-        m_alignAngle = alignAngle;
+        m_reflectiveSensor = reflectiveSensor;
+        m_distance = distance;
     }
 
     @Override
@@ -24,10 +26,14 @@ public class DriveAutoAlign extends Command {
 
     @Override
     public void execute(){
-        m_drivetrain.arcadeDrive(m_speed, 0);
-        while(!turnFinished()){
-            m_drivetrain.arcadeDrive(0, m_speed);
+        if(m_reflectiveSensor.leftValue()<0.81 && m_reflectiveSensor.rightValue()<0.81){
+        m_drivetrain.arcadeDrive(1, 0);
+        }else if(m_reflectiveSensor.leftValue()>0.81){
+            m_drivetrain.arcadeDrive(0, -0.5);
+        }else if(m_reflectiveSensor.rightValue()>0.81){
+            m_drivetrain.arcadeDrive(0, 0.5);
         }
+    
     }
 
     public boolean turnFinished() {
@@ -54,6 +60,6 @@ public class DriveAutoAlign extends Command {
    
     @Override
     public boolean isFinished() {
-        return Math.abs(m_drivetrain.getAverageDistanceInch()) >= m_distance;
+        return (m_reflectiveSensor.rightValue() >0.81 && m_reflectiveSensor.leftValue()>0.81) || Math.abs(m_drivetrain.getAverageDistanceInch()) >= m_distance;  
     }
 }
