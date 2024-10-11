@@ -8,7 +8,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ReflectiveSensor;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class AutonomousDistance extends SequentialCommandGroup {
+public class BlueLineFollowingOneIteration extends SequentialCommandGroup {
   private double colorValue = 0.83;
   private double turnSpeed = 0.65;
   private double forwardSpeed = 0.65;
@@ -20,7 +20,7 @@ public class AutonomousDistance extends SequentialCommandGroup {
    *
    * @param drivetrain The drivetrain subsystem on which this command will run
    */
-  public AutonomousDistance(Drivetrain drivetrain, ReflectiveSensor sensor) {
+  public BlueLineFollowingOneIteration(Drivetrain drivetrain, ReflectiveSensor sensor) {
     addCommands(
         new ForwardOnBlueTape(drivetrain, sensor, forwardSpeed, colorValue),
         new TurnRightUntilBlueTape(drivetrain, sensor, turnSpeed, colorValue),
@@ -36,3 +36,22 @@ public class AutonomousDistance extends SequentialCommandGroup {
         new TurnDegrees(0.65, 15, drivetrain));
   }
 }
+// initialize to reset distance sensor
+// for (int i = 0; i <= 33; i++){
+// addCommands(
+// new DriveDistance(0.75, 1, drivetrain),
+// new TurnDegrees(-2,drivetrain.m_gyro.getAngleZ(),drivetrain));
+// System.out.println(drivetrain.m_gyro.getAngleZ());
+// }
+// addCommands(
+// new TurnDegrees(-0.6, 45, drivetrain));
+// for (int i = 0; i <= 27; i++){
+// addCommands(
+// new DriveDistance(0.75, 1, drivetrain),
+// new TurnDegrees(-2,drivetrain.m_gyro.getAngleZ(),drivetrain));
+// System.out.println(drivetrain.m_gyro.getAngleZ());
+// }
+// addCommands(
+// new TurnDegrees(0.6, 45, drivetrain));
+
+// }

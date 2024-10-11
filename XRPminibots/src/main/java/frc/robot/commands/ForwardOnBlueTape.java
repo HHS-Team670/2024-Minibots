@@ -3,6 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ReflectiveSensor;
+import org.littletonrobotics.junction.Logger;
 public class ForwardOnBlueTape extends Command {
   private Drivetrain m_drive;
   private ReflectiveSensor m_sensor;
@@ -25,6 +26,8 @@ public class ForwardOnBlueTape extends Command {
 
   @Override
   public void execute(){
+    Logger.recordOutput("LeftSensor: ", m_sensor.leftValue());
+    Logger.recordOutput("RightSensor: ", m_sensor.rightValue());
     //move forward
     if (m_sensor.leftValue() < colorValue && m_sensor.rightValue() < colorValue){
       m_drive.arcadeDrive(m_speed,0);
