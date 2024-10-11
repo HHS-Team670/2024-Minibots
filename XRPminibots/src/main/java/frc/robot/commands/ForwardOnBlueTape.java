@@ -3,7 +3,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ReflectiveSensor;
-
 public class ForwardOnBlueTape extends Command {
   private Drivetrain m_drive;
   private ReflectiveSensor m_sensor;
