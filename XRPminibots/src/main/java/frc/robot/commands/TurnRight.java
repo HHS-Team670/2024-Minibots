@@ -1,23 +1,24 @@
 package frc.robot.commands;
-import edu.wpi.first.wpilibj.xrp.XRPReflectanceSensor;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ReflectiveSensor;
 
-
-public class BalanceDrive extends Command {
-
-    private ReflectiveSensor reflectiveSensor;
+public class TurnRight extends Command{
+    
+        private ReflectiveSensor reflectiveSensor;
     private final Drivetrain m_drive;
     private final double m_duration;
-    private long m_startTime;
     private final double m_speed;
+    private long m_startTime;
+    private final double angle;
     
-    public BalanceDrive(double speed, double distance, Drivetrain drive, ReflectiveSensor reflectiveSensor) {
+    public TurnRight(double speed, double distance, Drivetrain drive, ReflectiveSensor reflectiveSensor) {
         m_speed = speed;
         m_duration = distance;
         m_drive = drive;
         this.reflectiveSensor = reflectiveSensor;
+        this.angle = 90;
         addRequirements(drive);
       }
 
@@ -29,15 +30,7 @@ public class BalanceDrive extends Command {
       // Called every time the scheduler runs while the command is scheduled.
       @Override
       public void execute() {
-        if(reflectiveSensor.leftValue() <= 0.83 && reflectiveSensor.rightValue() <= 0.83 ){
-              m_drive.arcadeDrive(0.65, 0);
-        }
-        else if(reflectiveSensor.leftValue() <= 0.83){
-             m_drive.arcadeDrive(0.65, 1);
-        }
-        else if(reflectiveSensor.rightValue() <= 0.83){
-             m_drive.arcadeDrive(0.65, -1);
-        }
+        m_drive.arcadeDrive(0, -0.65);
       }
     
       // Called once the command ends or is interrupted.
@@ -49,7 +42,8 @@ public class BalanceDrive extends Command {
       // Returns true when the command should end.
       @Override
       public boolean isFinished() {
-        return reflectiveSensor.rightValue() > 0.83 && reflectiveSensor.leftValue() > 0.83;
+        return reflectiveSensor.rightValue() <= 0.83 && reflectiveSensor.leftValue() <= 0.83;
         
       }
+
 }

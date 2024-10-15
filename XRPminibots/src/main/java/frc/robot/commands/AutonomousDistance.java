@@ -18,8 +18,14 @@ public class AutonomousDistance extends SequentialCommandGroup {
    */
   public AutonomousDistance(Drivetrain drivetrain, ReflectiveSensor reflectanceSensor) {
     addCommands(
-      new BalanceDrive(1, 20, drivetrain, reflectanceSensor)
-        // new DriveDistance(-2, 20, drivetrain),
+      new BalanceDrive(1, 100, drivetrain, reflectanceSensor),
+      new TurnRight(1, 0, drivetrain, reflectanceSensor),
+      new BalanceDrive(1, 100, drivetrain, reflectanceSensor),
+      new TurnRight(1, 0, drivetrain, reflectanceSensor),
+      new BalanceDrive(1, 100, drivetrain, reflectanceSensor),
+      new TurnLeft(0, 0, drivetrain, reflectanceSensor),
+      new BalanceDrive(1, 100, drivetrain, reflectanceSensor)
+     // new BalanceDrive(0, 0, drivetrain, reflectanceSensor)
         // new TurnDegrees(-1, 90, drivetrain),
         // new DriveDistance(2, 15, drivetrain),
         // new TurnDegrees(5, 45, drivetrain),
