@@ -19,6 +19,8 @@ public class AutonomousDistance extends SequentialCommandGroup {
   public AutonomousDistance(Drivetrain drivetrain, ReflectiveSensor reflectiveSensor) {
     
     addCommands(
-        new DriveAutoAlign(200, -2, drivetrain, reflectiveSensor));
+      LineFollower.initialize()
+      
+      )
   }
 }
