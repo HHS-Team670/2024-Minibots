@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Encoder;
@@ -151,10 +153,13 @@ public class Drivetrain extends SubsystemBase {
    * 
    */
   public double getLeftReflectanceValue(){
+
+    Logger.recordOutput("ReflectanceSensor/LeftReflectance", m_reflectanceSensor.getLeftReflectanceValue() * 5.0);
     return m_reflectanceSensor.getLeftReflectanceValue() * 5.0;
   }
 
   public double getRightReflectanceValue(){
+    Logger.recordOutput("ReflectanceSensor/RightReflectance", m_reflectanceSensor.getRightReflectanceValue() * 5.0);
     return m_reflectanceSensor.getRightReflectanceValue() * 5.0;
   }
 
