@@ -10,8 +10,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class AutonomousDistance extends SequentialCommandGroup {
   private double colorValue = 0.83;
-  private double turnSpeed = 0.65;
-  private double forwardSpeed = 0.65;
 
   /**
    * Creates a new Autonomous Drive based on distance. This will drive out for a
@@ -22,17 +20,17 @@ public class AutonomousDistance extends SequentialCommandGroup {
    */
   public AutonomousDistance(Drivetrain drivetrain, ReflectiveSensor sensor) {
     addCommands(
-        new ForwardOnBlueTape(drivetrain, sensor, forwardSpeed, colorValue),
-        new TurnRightUntilBlueTape(drivetrain, sensor, turnSpeed, colorValue),
+        new ForwardOnBlueTape(drivetrain, sensor, 0.65, colorValue),
+        new TurnRightUntilBlueTape(drivetrain, sensor, 0.65, colorValue),
         new TurnDegrees(-0.65, 15, drivetrain),
-        new ForwardOnBlueTape(drivetrain, sensor, forwardSpeed, colorValue),
-        new TurnRightUntilBlueTape(drivetrain, sensor, turnSpeed, colorValue),
+        new ForwardOnBlueTape(drivetrain, sensor, 0.65, colorValue),
+        new TurnRightUntilBlueTape(drivetrain, sensor, 0.65, colorValue),
         new TurnDegrees(-0.65, 15, drivetrain),
-        new ForwardOnBlueTape(drivetrain, sensor, forwardSpeed, colorValue),
-        new TurnLeftUntilBlueTape(drivetrain, sensor, turnSpeed, colorValue),
+        new ForwardOnBlueTape(drivetrain, sensor, 0.65, colorValue),
+        new TurnLeftUntilBlueTape(drivetrain, sensor, 0.65, colorValue),
         new TurnDegrees(0.65, 15, drivetrain),
-        new ForwardOnBlueTape(drivetrain, sensor, forwardSpeed, colorValue),
-        new TurnLeftUntilBlueTape(drivetrain, sensor, turnSpeed, colorValue),
+        new ForwardOnBlueTape(drivetrain, sensor, 0.65, colorValue),
+        new TurnLeftUntilBlueTape(drivetrain, sensor, 0.65, colorValue),
         new TurnDegrees(0.65, 15, drivetrain));
   }
 }
