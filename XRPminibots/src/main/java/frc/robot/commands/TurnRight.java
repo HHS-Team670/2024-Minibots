@@ -6,7 +6,7 @@ import frc.robot.subsystems.ReflectiveSensor;
 
 public class TurnRight extends Command{
     
-        private ReflectiveSensor reflectiveSensor;
+    private ReflectiveSensor reflectiveSensor;
     private final Drivetrain m_drive;
     private final double m_duration;
     private final double m_speed;
@@ -30,6 +30,12 @@ public class TurnRight extends Command{
       // Called every time the scheduler runs while the command is scheduled.
       @Override
       public void execute() {
+        //if both sensors detect blue
+        //arcade drive forward
+        //if left sensor detects blue but right doesn't
+        //arcade drive left
+        //if right sensor detects blue but left doesnt
+        //arcade drive right
         m_drive.arcadeDrive(0, -0.65);
       }
     
