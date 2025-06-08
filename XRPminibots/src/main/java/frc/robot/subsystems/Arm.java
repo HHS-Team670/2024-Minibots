@@ -8,12 +8,35 @@ import edu.wpi.first.wpilibj.xrp.XRPServo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Arm extends SubsystemBase {
-  private final XRPServo m_armServo;
+  private final XRPServo servoMotor;
 
-  /** Creates a new Arm. */
+  // Stores the instance to avoid multiple instances of the same subsystem
+  private static Arm mInstance = null;
+
+  public static synchronized Arm getInstance() {
+    mInstance = mInstance == null ? new Arm() : mInstance;
+    return mInstance;
+  }
+
+  public enum ArmPosition {
+    STOW(0.0),
+    UP(90.0);
+
+    private double angle;
+
+    private ArmPosition(double angle) {
+      this.angle = angle;
+    }
+
+    public double getAngle() {
+      return this.angle;
+    }
+  }
+
+  // Creates a new arm
   public Arm() {
     // Device number 4 maps to the physical Servo 1 port on the XRP
-    m_armServo = new XRPServo(4);
+    servoMotor = new XRPServo(4);
   }
 
   @Override
@@ -21,12 +44,8 @@ public class Arm extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  /**
-   * Set the current angle of the arm (0 - 180 degrees).
-   *
-   * @param angleDeg Desired arm angle in degrees
-   */
-  public void setAngle(double angleDeg) {
-    m_armServo.setAngle(angleDeg);
+  // Set the angle of the arm to the degree parameter (0-180 degrees)
+  public void setAngle(ArmPosition armPos) {
+    servoMotor.setAngle(armPos.getAngle());
   }
 }

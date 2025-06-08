@@ -13,8 +13,7 @@ import edu.wpi.first.wpilibj.xrp.XRPMotor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drivetrain extends SubsystemBase {
-  private static final double kGearRatio =
-      (30.0 / 14.0) * (28.0 / 16.0) * (36.0 / 9.0) * (26.0 / 8.0); // 48.75:1
+  private static final double kGearRatio = (30.0 / 14.0) * (28.0 / 16.0) * (36.0 / 9.0) * (26.0 / 8.0); // 48.75:1
   private static final double kCountsPerMotorShaftRev = 12.0;
   private static final double kCountsPerRevolution = kCountsPerMotorShaftRev * kGearRatio; // 585.0
   private static final double kWheelDiameterInch = 2.3622; // 60 mm
@@ -30,8 +29,7 @@ public class Drivetrain extends SubsystemBase {
   private final Encoder m_rightEncoder = new Encoder(6, 7);
 
   // Set up the differential drive controller
-  private final DifferentialDrive m_diffDrive =
-      new DifferentialDrive(m_leftMotor::set, m_rightMotor::set);
+  private final DifferentialDrive m_diffDrive = new DifferentialDrive(m_leftMotor::set, m_rightMotor::set);
 
   // Set up the XRPGyro
   private final XRPGyro m_gyro = new XRPGyro();
@@ -39,7 +37,15 @@ public class Drivetrain extends SubsystemBase {
   // Set up the BuiltInAccelerometer
   private final BuiltInAccelerometer m_accelerometer = new BuiltInAccelerometer();
 
-  /** Creates a new Drivetrain. */
+  // Stores the instance to avoid multiple instances of the same subsystem
+  private static Drivetrain mInstance = null;
+
+  public static synchronized Drivetrain getInstance() {
+    mInstance = mInstance == null ? new Drivetrain() : mInstance;
+    return mInstance;
+  }
+
+  // Creates a new Drivetrain
   public Drivetrain() {
     SendableRegistry.addChild(m_diffDrive, m_leftMotor);
     SendableRegistry.addChild(m_diffDrive, m_rightMotor);
@@ -84,61 +90,37 @@ public class Drivetrain extends SubsystemBase {
     return (getLeftDistanceInch() + getRightDistanceInch()) / 2.0;
   }
 
-  /**
-   * The acceleration in the X-axis.
-   *
-   * @return The acceleration of the XRP along the X-axis in Gs
-   */
+  // The acceleration in the x-axis
   public double getAccelX() {
     return m_accelerometer.getX();
   }
 
-  /**
-   * The acceleration in the Y-axis.
-   *
-   * @return The acceleration of the XRP along the Y-axis in Gs
-   */
+  // The acceleration in the y-axis
   public double getAccelY() {
     return m_accelerometer.getY();
   }
 
-  /**
-   * The acceleration in the Z-axis.
-   *
-   * @return The acceleration of the XRP along the Z-axis in Gs
-   */
+  // The acceleration in the z-axis
   public double getAccelZ() {
     return m_accelerometer.getZ();
   }
 
-  /**
-   * Current angle of the XRP around the X-axis.
-   *
-   * @return The current angle of the XRP in degrees
-   */
+  // The current angle of the robot around the x-axis in degrees
   public double getGyroAngleX() {
     return m_gyro.getAngleX();
   }
 
-  /**
-   * Current angle of the XRP around the Y-axis.
-   *
-   * @return The current angle of the XRP in degrees
-   */
+  // The current angle of the robot around the y-axis in degrees
   public double getGyroAngleY() {
     return m_gyro.getAngleY();
   }
 
-  /**
-   * Current angle of the XRP around the Z-axis.
-   *
-   * @return The current angle of the XRP in degrees
-   */
+  // The current angle of the robot around the z-axis in degrees
   public double getGyroAngleZ() {
     return m_gyro.getAngleZ();
   }
 
-  /** Reset the gyro. */
+  //Resets the gyro
   public void resetGyro() {
     m_gyro.reset();
   }
