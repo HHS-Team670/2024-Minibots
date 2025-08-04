@@ -5,12 +5,19 @@
 package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.robot.commands.SetArmPosition;
+import frc.robot.commands.drivetrain.TurnDegrees;
+import frc.robot.subsystems.Arm.ArmPosition;
 
 public class ParallelCommand extends ParallelCommandGroup {
-
-  //Sequentially runs commands in an auton path
-  //NOTE: You can also create parallel command groups which run commands simultaneously (these are also treated like commands and can be nested within sequential command groups)
   public ParallelCommand() {
-    addCommands();
+    addCommands(
+      new TurnDegrees(1, 90),
+      new SetArmPosition(ArmPosition.UP)
+    );
   }
 }
+
+
+//Sequentially runs commands in an auton path
+  //NOTE: You can also create sequential command groups which run commands simultaneously (these are also treated like commands and can be nested within parallel command groups)

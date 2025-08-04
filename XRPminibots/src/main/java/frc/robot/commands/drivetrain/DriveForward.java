@@ -7,7 +7,7 @@ package frc.robot.commands.drivetrain;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class ForwardDriveDistance extends Command {
+public class DriveForward extends Command {
   private final Drivetrain mDrivetrain;
   private final double distance;
   private final double speed;
@@ -20,7 +20,7 @@ public class ForwardDriveDistance extends Command {
    * @param inches The number of inches the robot will drive
    * @param drive The drivetrain subsystem on which this command will run
    */
-  public ForwardDriveDistance(double speed, double inches) {
+  public DriveForward(double speed, double inches) {
     distance = inches;
     this.speed = speed;
     this.mDrivetrain = Drivetrain.getInstance();
