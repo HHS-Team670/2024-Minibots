@@ -11,7 +11,12 @@ public class ReflectiveSensor {
         return mInstance;
     }
 
-    private XRPReflectanceSensor mReflectanceSensor = new XRPReflectanceSensor();
+    private XRPReflectanceSensor mReflectanceSensor;
+
+    private ReflectiveSensor() {
+        mReflectanceSensor = new XRPReflectanceSensor();
+    }
+
 
     public double leftValue() {
         return mReflectanceSensor.getLeftReflectanceValue();

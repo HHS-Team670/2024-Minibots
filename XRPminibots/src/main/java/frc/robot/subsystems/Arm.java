@@ -34,7 +34,7 @@ public class Arm extends SubsystemBase {
   }
 
   // Creates a new arm
-  public Arm() {
+  private Arm() {
     // Device number 4 maps to the physical Servo 1 port on the XRP
     servoMotor = new XRPServo(4);
   }

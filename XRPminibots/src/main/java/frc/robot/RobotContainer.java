@@ -4,8 +4,9 @@
 
 package frc.robot;
 
-import frc.robot.commands.AutonPath;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.auton.AutonPath;
+import frc.robot.joystickUtils.XboxJoysticButtons;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -20,7 +21,9 @@ public class RobotContainer {
   // The container for the robot. Contains subsystems, input/output devices
   public RobotContainer() {
     // Configure the button bindings
-    OI.configureButtonBindings();
+    XboxJoysticButtons.configureJoysticks(OI.getDriverController());
+    OI.configureDefaultDriveCommand();
+    OI.configureDriverControls();
   }
 
   // Returns the command to be run during the autonomous period

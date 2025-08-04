@@ -46,7 +46,7 @@ public class Drivetrain extends SubsystemBase {
   }
 
   // Creates a new Drivetrain
-  public Drivetrain() {
+  private Drivetrain() {
     SendableRegistry.addChild(m_diffDrive, m_leftMotor);
     SendableRegistry.addChild(m_diffDrive, m_rightMotor);
 
